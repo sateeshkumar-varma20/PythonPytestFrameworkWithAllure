@@ -34,3 +34,13 @@ steps:
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'run pytest'
+
+- task: PublishTestResults@2
+  displayName: publish unit test results
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: 'file*.extension'
+    searchFolder: 'allure-report/$(Build.BuildNumber)'
+    testRunTitle: Unit test results for $(Build.BuildNumber)
+    buildConfiguration: debug
+    mergeTestResults: true
